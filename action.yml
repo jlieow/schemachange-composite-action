@@ -1,0 +1,82 @@
+name: "Schemachange"
+description: "Executes DDL Statements into a Snowflake Database"
+inputs:
+    DRY_RUN:
+        description: ""
+        required: false
+        default: ""
+    SF_DATABASE:
+        description: ""
+        required: true
+    LOCATION_OF_DDL_SCRIPTS:
+        description: ""
+        required: true
+    SF_ACCOUNT:
+        description: ""
+        required: true
+    SF_USERNAME:
+        description: ""
+        required: true
+    SF_ROLE:
+        description: ""
+        required: true
+    SF_WAREHOUSE:
+        description: ""
+        required: true
+    SF_PASSWORD:
+        description: ""
+        required: true
+outputs:
+    random-number:
+        description: "Random number"
+        value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+    using: "composite"
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Use Python 3.8.x
+          uses: actions/setup-python@v2.2.1
+          with:
+              python-version: 3.8.x
+
+        - name: Create and populate connections.toml
+          shell: bash
+          env:
+              SF_ACCOUNT: ${{ inputs.SF_ACCOUNT }}
+              SF_USERNAME: ${{ inputs.SF_USERNAME }}
+              SF_ROLE: ${{ inputs.SF_ROLE }}
+              SF_WAREHOUSE: ${{ inputs.SF_WAREHOUSE }}
+              SF_DATABASE: ${{ inputs.SF_DATABASE }}
+              SF_PASSWORD: ${{ inputs.SF_PASSWORD }}
+          run: |
+              echo "Current Directory: ${PWD}"
+              echo "GITHUB WORKSPACE: ${GITHUB_WORKSPACE}"
+              chmod +x populateConnection.sh
+              bash populateConnection.sh
+              cat ./connections.toml
+
+        - name: Install dependencies
+          shell: bash
+          run: |
+              echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+              python --version
+              pip install schemachange
+
+        - name: "Deploying Schemachange on database: ${{ inputs.SF_DATABASE }}"
+          shell: bash
+          run: |
+              echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+              python --version
+              echo "Step 1: Installing schemachange"
+              pip install schemachange
+
+              echo "Step 2: Deploying schemachange on database: ${{ inputs.SF_DATABASE }}"
+              schemachange \
+                --root-folder $GITHUB_WORKSPACE/${{ inputs.LOCATION_OF_DDL_SCRIPTS }} \
+                --connections-file-path ./connections.toml \
+                --connection-name default \
+                --change-history-table ${{ inputs.SF_DATABASE }}.SCHEMACHANGE.CHANGE_HISTORY \
+                --create-change-history-table \
+                ${{ inputs.DRY_RUN }}
