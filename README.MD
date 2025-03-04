@@ -7,28 +7,37 @@ This repo contains a action to run Schemachange described [here](https://github.
 ```yaml
 inputs:
     DRY_RUN:
-        description: ""
+        description: 'Input "--dry-run" to run in dry run mode.'
         required: false
         default: ""
     SF_DATABASE:
-        description: ""
+        description: "Snowflake Database."
         required: true
     LOCATION_OF_DDL_SCRIPTS:
-        description: ""
+        description: "Dir in the repo which contains the DDL scripts."
         required: true
     SF_ACCOUNT:
-        description: ""
+        description: "Snowflake Account."
         required: true
     SF_USERNAME:
-        description: ""
+        description: "Snowflake User."
         required: true
     SF_ROLE:
-        description: ""
+        description: "Snowflake Role."
         required: true
     SF_WAREHOUSE:
-        description: ""
+        description: "Snowflake Warehouse."
         required: true
     SF_PASSWORD:
-        description: ""
-        required: true
+        description: "Snowflake User Password."
+        required: false
+    SF_PRIVATE_KEY:
+        description: "Snowflake private key content."
+        required: false
+    SF_PRIVATE_KEY_FILE:
+        description: "Snowflake path to private key file."
+        required: false
+    SF_PRIVATE_KEY_FILE_PWD:
+        description: "Snowflake private key password."
+        required: false
 ```

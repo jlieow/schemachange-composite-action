@@ -2,43 +2,39 @@ name: "Schemachange"
 description: "Executes DDL Statements into a Snowflake Database"
 inputs:
     DRY_RUN:
-        description: ""
+        description: 'Input "--dry-run" to run in dry run mode.'
         required: false
         default: ""
     SF_DATABASE:
-        description: ""
+        description: "Snowflake Database."
         required: true
     LOCATION_OF_DDL_SCRIPTS:
-        description: ""
+        description: "Dir in the repo which contains the DDL scripts."
         required: true
     SF_ACCOUNT:
-        description: ""
+        description: "Snowflake Account."
         required: true
     SF_USERNAME:
-        description: ""
+        description: "Snowflake User."
         required: true
     SF_ROLE:
-        description: ""
+        description: "Snowflake Role."
         required: true
     SF_WAREHOUSE:
-        description: ""
+        description: "Snowflake Warehouse."
         required: true
     SF_PASSWORD:
-        description: ""
+        description: "Snowflake User Password."
         required: false
     SF_PRIVATE_KEY:
-        description: ""
+        description: "Snowflake private key content."
         required: false
     SF_PRIVATE_KEY_FILE:
-        description: ""
+        description: "Snowflake path to private key file."
         required: false
     SF_PRIVATE_KEY_FILE_PWD:
-        description: ""
+        description: "Snowflake private key password."
         required: false
-outputs:
-    random-number:
-        description: "Random number"
-        value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
     using: "composite"
     steps:
