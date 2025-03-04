@@ -1,6 +1,6 @@
 # schemachange
 
-This repo contains a action to run Schemachange described [here](https://github.com/Snowflake-Labs/schemachange)
+This repo contains an action to run Schemachange described [here](https://github.com/Snowflake-Labs/schemachange)
 
 ## Input
 
