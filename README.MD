@@ -38,3 +38,17 @@ inputs:
         description: "Snowflake private key password."
         required: false
 ```
+
+## Authentication
+
+The action allows authentication either via `Password` or `Private Key Pair`.
+
+### Password
+
+If you are using `Password` authentication, provide `SF_PASSWORD` and ensure that `SF_PRIVATE_KEY` and `SF_PRIVATE_KEY_FILE_PWD` are not provided as inputs.
+
+### Private Key Pair 
+
+If you are using `Private Key Pair` authentication, provide `SF_PRIVATE_KEY` and `SF_PRIVATE_KEY_FILE_PWD` as inputs.
+
+The private key pair is generated according to the following Snowflake [documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth)

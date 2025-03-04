@@ -27,10 +27,10 @@ inputs:
         description: "Snowflake User Password."
         required: false
     SF_PRIVATE_KEY:
-        description: "Snowflake private key content. Generated according to Snowflake Documentation: https://docs.snowflake.com/en/user-guide/key-pair-auth"
+        description: "Snowflake private key content."
         required: false
     SF_PRIVATE_KEY_FILE_PWD:
-        description: "Snowflake private key password. Generated according to Snowflake Documentation: https://docs.snowflake.com/en/user-guide/key-pair-auth"
+        description: "Snowflake private key password."
         required: false
 runs:
     using: "composite"
