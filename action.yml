@@ -27,13 +27,10 @@ inputs:
         description: "Snowflake User Password."
         required: false
     SF_PRIVATE_KEY:
-        description: "Snowflake private key content."
-        required: false
-    SF_PRIVATE_KEY_FILE:
-        description: "Snowflake path to private key file."
+        description: "Snowflake private key content. Generated according to Snowflake Documentation: https://docs.snowflake.com/en/user-guide/key-pair-auth"
         required: false
     SF_PRIVATE_KEY_FILE_PWD:
-        description: "Snowflake private key password."
+        description: "Snowflake private key password. Generated according to Snowflake Documentation: https://docs.snowflake.com/en/user-guide/key-pair-auth"
         required: false
 runs:
     using: "composite"
@@ -56,12 +53,15 @@ runs:
               SF_DATABASE: ${{ inputs.SF_DATABASE }}
               SF_PASSWORD: ${{ inputs.SF_PASSWORD }}
               SF_PRIVATE_KEY: ${{ inputs.SF_PRIVATE_KEY }}
-              SF_PRIVATE_KEY_FILE: ./${{ inputs.SF_PRIVATE_KEY_FILE }}
+              SF_PRIVATE_KEY_FILE: ./key.p8
               SF_PRIVATE_KEY_FILE_PWD: ${{ inputs.SF_PRIVATE_KEY_FILE_PWD }}
           run: |
-              echo "Creating Private Key File"
-              echo "${{ inputs.SF_PRIVATE_KEY }}"  > ./${{ inputs.SF_PRIVATE_KEY_FILE }}
-              chmod 600 ./${{ inputs.SF_PRIVATE_KEY_FILE }}
+              # If key is provided create key file
+              if [[ -n "${{ inputs.SF_PRIVATE_KEY }}" ]]; then
+                  echo "Creating Private Key File"
+                  echo "${{ inputs.SF_PRIVATE_KEY }}"  > ./key.p8
+                  chmod 600 ./key.p8
+              fi
 
               echo "Current Action Path: ${{ github.action_path }}"
               echo "You can use this path to access files located in the same repository as the action."

@@ -34,9 +34,6 @@ inputs:
     SF_PRIVATE_KEY:
         description: "Snowflake private key content."
         required: false
-    SF_PRIVATE_KEY_FILE:
-        description: "Snowflake path to private key file."
-        required: false
     SF_PRIVATE_KEY_FILE_PWD:
         description: "Snowflake private key password."
         required: false
