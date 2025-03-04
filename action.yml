@@ -25,7 +25,13 @@ inputs:
         required: true
     SF_PASSWORD:
         description: ""
-        required: true
+        required: false
+    SF_PRIVATE_KEY_FILE:
+        description: ""
+        required: false
+    SF_PRIVATE_KEY_FILE_PWD:
+        description: ""
+        required: false
 outputs:
     random-number:
         description: "Random number"
@@ -50,6 +56,8 @@ runs:
               SF_WAREHOUSE: ${{ inputs.SF_WAREHOUSE }}
               SF_DATABASE: ${{ inputs.SF_DATABASE }}
               SF_PASSWORD: ${{ inputs.SF_PASSWORD }}
+              SF_PRIVATE_KEY_FILE: ${{ inputs.SF_PRIVATE_KEY_FILE }}
+              SF_PRIVATE_KEY_FILE_PWD: ${{ inputs.SF_PRIVATE_KEY_FILE_PWD }}
           run: |
               echo "Current Action Path: ${{ github.action_path }}"
               echo "You can use this path to access files located in the same repository as the action."
