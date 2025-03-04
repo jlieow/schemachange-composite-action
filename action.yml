@@ -26,6 +26,9 @@ inputs:
     SF_PASSWORD:
         description: ""
         required: false
+    SF_PRIVATE_KEY:
+        description: ""
+        required: false
     SF_PRIVATE_KEY_FILE:
         description: ""
         required: false
@@ -56,15 +59,19 @@ runs:
               SF_WAREHOUSE: ${{ inputs.SF_WAREHOUSE }}
               SF_DATABASE: ${{ inputs.SF_DATABASE }}
               SF_PASSWORD: ${{ inputs.SF_PASSWORD }}
-              SF_PRIVATE_KEY_FILE: ${{ inputs.SF_PRIVATE_KEY_FILE }}
+              SF_PRIVATE_KEY: ${{ inputs.SF_PRIVATE_KEY }}
+              SF_PRIVATE_KEY_FILE: ./${{ inputs.SF_PRIVATE_KEY_FILE }}
               SF_PRIVATE_KEY_FILE_PWD: ${{ inputs.SF_PRIVATE_KEY_FILE_PWD }}
           run: |
+              echo "Creating Private Key File"
+              echo "${{ inputs.SF_PRIVATE_KEY }}"  > ./${{ inputs.SF_PRIVATE_KEY_FILE }}
+              chmod 600 ./${{ inputs.SF_PRIVATE_KEY_FILE }}
+
               echo "Current Action Path: ${{ github.action_path }}"
               echo "You can use this path to access files located in the same repository as the action."
               chmod +x ${{ github.action_path }}/populateConnection.sh
               bash ${{ github.action_path }}/populateConnection.sh
               cat ./connections.toml
-              ls ${{ github.action_path }}
 
         - name: Install dependencies
           shell: bash
